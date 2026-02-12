@@ -9,9 +9,9 @@ import sendMail from "../services/sendMail.js";
 class AuthController {
 
   static async registerUser(req: Request, res: Response) {
-    const { username, email, password, role } = req.body;
+    const { username, email, password } = req.body;
 
-    if (!username || !email || !password || !role) {
+    if (!username || !email || !password) {
       return res.status(400).json({ message: "All fields are required." });
     }
 
@@ -32,7 +32,7 @@ class AuthController {
       username,
       email,
       password: bcrypt.hashSync(password, 10),
-      role
+
     })
 
     await sendMail({
