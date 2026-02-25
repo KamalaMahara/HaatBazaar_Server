@@ -25,4 +25,6 @@ app.use("/product", productRoute)
 app.use("/order", orderRoute)
 app.use("/cart", CartRoute)
 
+app.use(express.static("./src/uploads"))  // ab yo folder ko data jasle ni access grna milyo 
+
 export default app

@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express'
 import { Cart } from '../Database/models/cartModel.js'
 import Product from '../Database/models/product.Model.js'
+import Category from '../Database/models/categoryModel.js'
 
 
 interface AuthRequest extends Request {
@@ -18,7 +19,7 @@ class CartController {
     const userId = req.user?.id // userid chai usermiddleware ma isuserloggedin method user lae login garda kheri user ko data 'req.user ' ma aayeko hunxa so hamile tei bata user ko id liyam r baki chai body bata liyam ani req ma user property hudaina so extend garera use grya
 
     const { productId, quantity } = req.body
-    if (!productId || !quantity) {
+    if (!productId || quantity === undefined || quantity === null) {
       res.status(400).json({
         message: " please provide productid and quantity"
       })
@@ -50,8 +51,25 @@ class CartController {
 
       })
     }
+    const cartData = await Cart.findAll({
+      where: {
+        userId
+      },
+
+      include: [
+        {
+          model: Product,
+          include: [
+            {
+              model: Category
+            }
+          ]
+        }
+      ]
+    })
     res.status(200).json({
-      message: "Product added to Cart "
+      message: "Product added to Cart ",
+      data: cartData
     })
   }
   async getMyCartItems(req: AuthRequest, res: Response) {
@@ -120,7 +138,7 @@ class CartController {
     const { productId } = req.params
     const { quantity } = req.body
 
-    if (!productId || !quantity) {
+    if (!productId || quantity === undefined || quantity === null) {
       res.status(400).json({
         message: "please provide productId and quantity to update"
       })

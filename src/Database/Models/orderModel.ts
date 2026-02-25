@@ -43,5 +43,57 @@ class Order extends Model {
     defaultValue: OrderStatus.Pending
   })
   declare OrderStatus: string
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    defaultValue: "Anonymous"
+
+  })
+  declare firstName: string
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    defaultValue: "Anonymous"
+  })
+  declare lastName: string
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    defaultValue: "Anonymous"
+  })
+  declare email: string
+
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    defaultValue: "Anonymous"
+  })
+  declare addressline: string
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    defaultValue: "Anonymous"
+  })
+  declare state: string
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    defaultValue: "Anonymous"
+  })
+  declare zipCode: string
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    defaultValue: "Anonymous"
+  })
+  declare city: string
+
 }
 export default Order

@@ -11,7 +11,7 @@ router.route("/").post(userMiddleware.isUserLoggedIn, userMiddleware.accessTo(Ro
 
 router.route("/").delete(userMiddleware.isUserLoggedIn, userMiddleware.accessTo(Roles.Customer), errorHandler(cartController.deleteMyCartItem))
 
-router.route("/:productId").patch(userMiddleware.isUserLoggedIn, userMiddleware.accessTo(Roles.Customer), errorHandler(cartController.addToCart))
+router.route("/:productId").patch(userMiddleware.isUserLoggedIn, userMiddleware.accessTo(Roles.Customer), errorHandler(cartController.updateCartItemsQuantity))
 
 
 

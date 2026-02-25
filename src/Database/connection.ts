@@ -65,7 +65,7 @@ try {
   console.log("error", err);
 }
 
-await sequelize.sync({ force: false, alter: true }).then(async () => {
+await sequelize.sync({ force: false, alter: false }).then(async () => {
   console.log("synced");
   await CategoryController.seedCategory()
 });

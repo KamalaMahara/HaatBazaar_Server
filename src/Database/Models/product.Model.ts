@@ -1,67 +1,52 @@
-import { Table, Column, Model, DataType, AllowNull, ForeignKey, BelongsTo } from 'sequelize-typescript'
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import Category from './categoryModel.js';
 
 @Table({
-  tableName: 'products', // yo table name vaneko supabase ko GUI ma dekhine name ho
-  modelName: 'Product',  // yo chai hamro project vitra ko table lae acess garne name 
-  timestamps: true
+  tableName: 'products',
+  modelName: 'Product',
+  timestamps: true,
 })
-
 class Product extends Model {
   @Column({
     type: DataType.UUID,
     defaultValue: DataType.UUIDV4,
-    primaryKey: true
+    primaryKey: true,
   })
   declare id: string;
 
   @Column({
     type: DataType.STRING,
-    allowNull: false
-
+    allowNull: false,
   })
-  declare productName: string;
+  productName!: string;
 
-  @Column({
-    type: DataType.TEXT
-
-  })
-  declare productDescription: string;
+  @Column(DataType.TEXT)
+  productDescription!: string;
 
   @Column({
     type: DataType.FLOAT,
-    allowNull: false
+    allowNull: false,
   })
-  declare productPrice: number;
+  productPrice!: number;
 
+  @Column(DataType.INTEGER)
+  productTotalStock!: number;
 
-  @Column({
-    type: DataType.INTEGER,
+  @Column(DataType.INTEGER)
+  productDiscount!: number;
 
-  })
-  declare productTotalStock: number
-
-
-  @Column({
-    type: DataType.INTEGER,
-
-  })
-  declare productDiscount: number
-
-  @Column({
-    type: DataType.STRING,
-  })
-  declare productImageUrl: string
+  @Column(DataType.STRING)
+  productImageUrl!: string;
 
   @ForeignKey(() => Category)
   @Column({
     type: DataType.UUID,
-    allowNull: false
+    allowNull: false,
   })
   categoryId!: string;
 
   @BelongsTo(() => Category)
   category!: Category;
-
 }
-export default Product 
+
+export default Product;
