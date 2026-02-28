@@ -48,7 +48,7 @@ class OrderController {
       products.length == 0 || !firstName || !lastName || !email || !zipCode || !city || !state || !addressLine
     ) {
       res.status(400).json({
-        message: "please fil out all the order details :phonenumber,shippingAddress,totoalamount ,products"
+        message: "please fil out all the order details :phonenumber,totoalamount ,products"
       })
       return
     }

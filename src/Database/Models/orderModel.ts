@@ -26,12 +26,7 @@ class Order extends Model {
   })
   declare phoneNumber: string
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
 
-  })
-  declare shippingAddress: string
 
   @Column({
     type: DataType.FLOAT,
