@@ -54,6 +54,14 @@ class OrderController {
     }
 
     //for order
+
+    let data;
+    // for payment 
+    const paymentData = await Payment.create({
+
+      paymentMethod: paymentMethod
+
+    })
     const orderDdata = await Order.create({
       phoneNumber,
 
@@ -61,10 +69,10 @@ class OrderController {
       userId,
       firstName,
       lastName, email,
-      city, zipCode, addressLine, state
+      city, zipCode, addressLine, state,
+      paymentId: paymentData.id
 
     })
-    let data;
     //for orderDetails
     // euta user le dherai products order garna sakxa so loop use grya
     products.forEach(async function (product) {
@@ -83,12 +91,7 @@ class OrderController {
       })
     })
 
-    // for payment 
-    const paymentData = await Payment.create({
-      orderId: orderDdata.id,
-      paymentMethod: paymentMethod
 
-    })
 
     if (paymentMethod == PaymentMethods.Khalti) {
       //khalti integration  logic
@@ -164,8 +167,69 @@ class OrderController {
 
   }
 
+  async fetchMyOrders(req: orderRequest, res: Response): Promise<void> {
+    const userId = req.user?.id
+    const orders = await Order.findAll({
+      where: {
+        userId
+      },
+      attributes: ["totalAmount", "id", "orderStatus"],
+      include: {
+        model: Payment,
+        attributes: ["paymentMethod", "paymentstatus"]
+      }
+    })
+    if (orders.length > 0) {
+      res.status(200).json({
+        message: "order fetched successfully",
+        data: orders
+      })
+    }
+    else {
+      res.status(404).json({
+        message: "no order found",
+        data: []
+      })
+    }
+  }
+  async fetchMyOrderDetail(req: orderRequest, res: Response): Promise<void> {
+    const orderId = req.params.id
+    const userId = req.user?.id
+    const orders = await OrderDetail.findAll({
+      where: {
+        orderId
+      },
+      attributes: ["totalAmount", "id", "orderStatus"]
+    })
+    if (orders.length > 0) {
+      res.status(200).json({
+        message: "order fetched successfully",
+        data: orders
+      })
+    }
+    else {
+      res.status(404).json({
+        message: "no order found",
+        data: []
+      })
+    }
+  }
+
 }
 
 
 
+
+
+
+
+
+
+
+
 export default new OrderController()
+
+
+
+
+

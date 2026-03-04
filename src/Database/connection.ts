@@ -30,12 +30,12 @@ User.hasMany(Order, {
 Order.belongsTo(User, { foreignKey: 'userId' })
 
 //Payment X Order relationship ---.payment ma orderId
-Order.hasOne(Payment, {
-  foreignKey: "orderId"
+Payment.hasOne(Order, {
+  foreignKey: "paymentId"
 })
 
-Payment.belongsTo(Order, {
-  foreignKey: 'orderId'
+Order.belongsTo(Payment, {
+  foreignKey: 'paymentId'
 })
 
 // OrderDetails X Order --> OrderDetails table ma OrderId
@@ -65,7 +65,7 @@ try {
   console.log("error", err);
 }
 
-await sequelize.sync({ force: false, alter: false }).then(async () => {
+await sequelize.sync({ force: false, alter: true }).then(async () => {
   console.log("synced");
   await CategoryController.seedCategory()
 });

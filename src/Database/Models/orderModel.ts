@@ -37,7 +37,7 @@ class Order extends Model {
     type: DataType.ENUM(OrderStatus.Cancelled, OrderStatus.Delivered, OrderStatus.Ontheway, OrderStatus.Pending, OrderStatus.Preparation),
     defaultValue: OrderStatus.Pending
   })
-  declare OrderStatus: string
+  declare orderStatus: string
 
   @Column({
     type: DataType.STRING,
