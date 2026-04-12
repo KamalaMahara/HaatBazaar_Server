@@ -6,7 +6,7 @@ import CategoryController from "../controller/CategoryController.js"
 const router: Router = express.Router()
 
 
-router.route("/").get(CategoryController.getCategories).post(userMiddleware.isUserLoggedIn, userMiddleware.accessTo(Roles.Admin), CategoryController.addCategory)
+router.route("/").get(CategoryController.getCategories).post(CategoryController.addCategory)
 
 router.route("/:id").patch(CategoryController.updateCategories).delete(CategoryController.deleteCategories)
 
