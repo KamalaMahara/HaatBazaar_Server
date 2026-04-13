@@ -200,6 +200,16 @@ class AuthController {
     })
 
   }
+  static async fetchUsers(req: Request, res: Response) {
+    const users = await User.findAll({
+      attributes: ["id", "username", "email", "role"]
+    })
+    res.status(200).json({
+      message: "all users fetched successfully",
+      users
+
+    })
+  }
 
 
 }
