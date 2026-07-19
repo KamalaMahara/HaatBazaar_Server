@@ -8,6 +8,7 @@ import Payment from "../Database/models/paymentModel.js"
 import axios from 'axios'
 import Product from "../Database/models/product.Model.js"
 import { Cart } from "../Database/models/cartModel.js"
+import User from "../Database/models/user.model.js"
 
 interface IProduct {
   productId: string,
@@ -332,6 +333,37 @@ class OrderController {
       message: "order deleted successfully"
     })
 
+  }
+  async fetchAllOrders(req: orderRequest, res: Response): Promise<void> {
+    const orders = await Order.findAll({
+      attributes: ["id", "totalAmount", "orderStatus", "createdAt", "email", "phoneNumber", "firstName", "lastName", "city", "state", "addressline", "zipCode"],
+      include: [
+        {
+          model: Payment,
+          attributes: ["paymentMethod", "paymentstatus"]
+        },
+        {
+          model: OrderDetail,
+          attributes: ["quantity", "id"],
+          include: [
+            {
+              model: Product,
+              attributes: ["productName", "productPrice", "productImageUrl"]
+            }
+          ]
+        },
+        {
+          model: User,
+          attributes: ["id", "username", "email"]
+        }
+      ],
+      order: [["createdAt", "DESC"]]
+    });
+
+    res.status(200).json({
+      message: "all orders fetched successfully",
+      data: orders
+    });
   }
 }
 

@@ -75,7 +75,10 @@ class AuthController {
         const token = generateToken(user.id)
         res.status(200).json({
           message: "logged in success 😊",
-          token
+          token,
+          username: user.username,
+          role: user.role,
+          email: user.email
         })
       }
 
@@ -84,6 +87,8 @@ class AuthController {
 
     //if password milyo vane token generate garne (jwt)
   }
+
+
   static async forgotPassword(req: Request, res: Response) {
     const { email } = req.body
     if (!email) {
@@ -210,6 +215,12 @@ class AuthController {
 
     })
   }
+  static async logoutUser(req: Request, res: Response) {
+    res.status(200).json({
+      message: "Logged out successfully 😊"
+    })
+  }
+
 
 
 }

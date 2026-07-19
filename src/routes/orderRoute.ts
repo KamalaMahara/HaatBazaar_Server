@@ -13,6 +13,8 @@ router.route("/admin/change-order-status/:id").post(userMiddleware.isUserLoggedI
 
 router.route("/admin/delete-order/:id").post(userMiddleware.isUserLoggedIn, userMiddleware.accessTo(Roles.Admin), errorHandler(orderController.deleteOrder))
 
+router.route("/admin").get(userMiddleware.isUserLoggedIn, userMiddleware.accessTo(Roles.Admin), errorHandler(orderController.fetchAllOrders))
+
 
 router.route("/cancel-order/:id").patch(userMiddleware.isUserLoggedIn, userMiddleware.accessTo(Roles.Customer), errorHandler(orderController.cancelMyOrder))
 

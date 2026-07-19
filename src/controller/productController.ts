@@ -10,7 +10,7 @@ class ProductController {
 
     console.log(req.file)
 
-    const fileName = req.file
+    const fileName = req.file ? req.file.filename : "";
 
     if (!productName || !productDescription || !productPrice || !productTotalStock || !productDiscount || !categoryId) {
       res.status(400).json({

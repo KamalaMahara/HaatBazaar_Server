@@ -22,12 +22,16 @@ interface IExtendedRequest extends Request {
 class UserMiddleware {
   async isUserLoggedIn(req: IExtendedRequest, res: Response, next: NextFunction): Promise<void> {
     // token receive garne
-    const token = req.headers.authorization;
+    let token = req.headers.authorization;
     if (!token) {
       res.status(403).json({
         message: "Token must be provided",
       });
       return;
+    }
+
+    if (token.startsWith("Bearer ")) {
+      token = token.slice(7);
     }
 
     jwt.verify(token, envConfig.jwtSecretKey as string, async (error, result: any) => {
